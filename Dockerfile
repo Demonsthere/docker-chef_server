@@ -14,8 +14,11 @@ RUN sysctl -w kernel.shmmax=17179869184
 RUN wget --no-check-certificate https://packages.chef.io/stable/ubuntu/12.04/chef-server_11.1.4-1_amd64.deb
 RUN dpkg -i chef-server_*.deb
 RUN rm chef-server_*.deb
+
+ADD run_chef /
 #RUN /opt/chef-server/embedded/bin/runsvdir-start &
 #RUN chef-server-ctl reconfigure
 RUN ifconfig
+ENTRYPOINT ["sh", "run_chef"]
 
 EXPOSE 80 443 4000
