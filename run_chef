@@ -1,7 +1,10 @@
 #!/bin/sh
-
-/opt/opscode/embedded/bin/runsvdir-start &
+/opt/chef-server/embedded/bin/runsvdir-start &
 chef-server-ctl reconfigure
+sleep 100s
+while true; do
+  sleep 1s
+done
 ## Install Chef WebUI
 #chef-server-ctl install opscode-manage
 #opscode-manage-ctl reconfigure
