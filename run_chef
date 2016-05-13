@@ -1,11 +1,16 @@
 #!/bin/sh
+echo '----> Run redis in background'
 /opt/chef-server/embedded/bin/runsvdir-start &
+echo '----> Initial sever configuration'
 chef-server-ctl reconfigure 
-chown chef_server:chef_server /var/opt/chef-server/bookshelf/data/bookshelf
-chmod 755 /var/opt/chef-server/bookshelf/data/bookshelf
-sleep 100s
+echo '----> Load backup'
+mkdir -p /var/opt/chef-server/bookshelf/data/bookshelf/
+chown chef_server:chef_server /var/opt/chef-server/bookshelf/data/bookshelf/
+cp -r /bookshelf/* /var/opt/chef-server/bookshelf/data/bookshelf/
 while true; do
-  sleep 1s
+  sleep 30s
+  echo '----> Making a backup of the cookbooks'
+  cp -r /var/opt/chef-server/bookshelf/data/bookshelf/* /bookshelf
 done
 ## Install Chef WebUI
 #chef-server-ctl install opscode-manage
