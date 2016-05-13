@@ -1,6 +1,8 @@
 #!/bin/sh
 /opt/chef-server/embedded/bin/runsvdir-start &
-chef-server-ctl reconfigure
+chef-server-ctl reconfigure 
+chown chef_server:chef_server /var/opt/chef-server/bookshelf/data/bookshelf
+chmod 755 /var/opt/chef-server/bookshelf/data/bookshelf
 sleep 100s
 while true; do
   sleep 1s

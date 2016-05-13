@@ -2,8 +2,9 @@ FROM ubuntu:12.04
 
 MAINTAINER Jakub Błaszczyk <jakub.blaszczyj@sap.com>
 
+ENV TERM=xterm
+
 RUN apt-get update
-## Install wget
 RUN apt-get install -y wget cron net-tools
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
@@ -16,9 +17,7 @@ RUN dpkg -i chef-server_*.deb
 RUN rm chef-server_*.deb
 
 ADD run_chef /
-#RUN /opt/chef-server/embedded/bin/runsvdir-start &
-#RUN chef-server-ctl reconfigure
-RUN ifconfig
-ENTRYPOINT ["sh", "run_chef"]
+ADD chef-server.rb /etc/chef-server/
+ADD keys/chef-validator.pem /etc/chef-server/
 
-EXPOSE 80 443 4000
+ENTRYPOINT ["sh", "run_chef"]
